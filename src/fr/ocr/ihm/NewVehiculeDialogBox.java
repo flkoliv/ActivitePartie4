@@ -30,7 +30,7 @@ public class NewVehiculeDialogBox extends JDialog {
 	private JTextField nom, prix;
 
 	public NewVehiculeDialogBox(JFrame parent, String title, boolean modal) {
-		// On appelle le construteur de JDialog correspondant
+		// On appelle le constructeur de JDialog correspondant
 		super(parent, title, modal);
 		// On spécifie une taille
 		this.setSize(560, 370);
@@ -40,7 +40,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		this.setResizable(false);
 
 		// Tout ceci ressemble à ce que nous faisons depuis le début avec notre JFrame.
-		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.initComponent();
 		this.setVisible(true);
 

@@ -2,6 +2,8 @@ package fr.ocr.ihm.listener;
 
 import java.awt.event.ActionEvent;
 
+import fr.ocr.ihm.VehiculeDetailsDialogBox;
+
 public class ViewDetailVehiculeListener extends ButtonListener {
 	private Integer id;
 
@@ -12,5 +14,8 @@ public class ViewDetailVehiculeListener extends ButtonListener {
 		ceci dans un popup personnalisée
 		
 		*/
+		System.out.println("details voiture");
+		VehiculeDetailsDialogBox  box = new VehiculeDetailsDialogBox(null, "Detail du véhicule", true);
+		
 	}
 }
