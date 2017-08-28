@@ -18,6 +18,9 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 
+import fr.ocr.ihm.listener.NewVehiculeDialogBoxCancelListener;
+import fr.ocr.ihm.listener.NewVehiculeDialogBoxOkListener;
+
 public class NewVehiculeDialogBox extends JDialog {
 	/**
 	 * 
@@ -124,6 +127,10 @@ public class NewVehiculeDialogBox extends JDialog {
 		JPanel control = new JPanel();
 		JButton okBouton = new JButton("OK");
 		JButton cancelBouton = new JButton("Annuler");
+		
+		okBouton.addActionListener(new NewVehiculeDialogBoxOkListener()); 
+		cancelBouton.addActionListener(new NewVehiculeDialogBoxCancelListener());
+		
 		
 		control.add(okBouton);
 	    control.add(cancelBouton);
