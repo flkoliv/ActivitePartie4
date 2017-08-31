@@ -8,12 +8,12 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import fr.ocr.sql.HsqldbConnection;
 
@@ -27,7 +27,8 @@ public class VehiculeDetailsDialogBox extends JDialog {
 	 * 
 	 */
 
-	private JLabel nomLabel, marqueLabel, moteurLabel, prixLabel, optionLabel, prixTotalLabel;
+	private JLabel nomLabel, marqueLabel, moteurLabel, prixLabel, prixTotalLabel;
+	JTextArea optionText;
 
 	public VehiculeDetailsDialogBox(JFrame parent, String title, boolean modal, String id) {
 
@@ -52,43 +53,34 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		Statement state;
 		try {
 			state = connect.createStatement();
-			ResultSet result = state.executeQuery("SELECT * FROM vehicule WHERE id=" + id);
-			// ResultSetMetaData resultMeta = result.getMetaData();
+			String requete = "SELECT * FROM vehicule ";
+			requete += "INNER JOIN marque ON vehicule.marque = marque.id ";
+			requete += "INNER JOIN moteur ON vehicule.moteur = moteur.id ";
+			requete += "INNER JOIN type_moteur ON moteur.moteur = type_moteur.id ";
+			requete += "WHERE vehicule.id = " + id;
+			ResultSet result = state.executeQuery(requete);
 			result.next();
-			String marqueId = new String(result.getString(1));
-			String moteurId = new String(result.getString(2));
 			nomLabel = new JLabel(result.getString(4));
 			prixLabel = new JLabel("Prix sans options : " + result.getString(3) + "€");
 			prixTotal += result.getDouble(3);
-			result = state.executeQuery("SELECT * FROM marque WHERE id=" + marqueId);
-			result.next();
-			marqueLabel = new JLabel(result.getString(2));
-			result = state.executeQuery("SELECT * FROM moteur WHERE id=" + moteurId);
-			result.next();
-			String cylindre = result.getString(2);
-			String idTypeMoteur = result.getString(3);
-			result = state.executeQuery("SELECT * FROM type_moteur WHERE id=" + idTypeMoteur);
-			result.next();
-			moteurLabel = new JLabel(result.getString(2) + " " + cylindre);
-			result = state.executeQuery("SELECT * FROM vehicule_option WHERE id_vehicule=" + id);
-
+			marqueLabel = new JLabel(result.getString(7));
+			moteurLabel = new JLabel(result.getString(13) + " " + result.getString(9));
+			requete = "SELECT description,prix FROM vehicule_option ";
+			requete += "INNER JOIN option ON vehicule_option.id_option = option.id ";
+			requete += "WHERE id_vehicule=" + id;
+			result = state.executeQuery(requete);
 			String options = new String();
-			ResultSet resultat;
 			while (result.next()) {
-
-				resultat = state.executeQuery("SELECT * FROM option WHERE id=" + result.getString(2));
-				resultat.next();
-				System.out.println(resultat.getString(2));
-				options += resultat.getString(2) + "(" + resultat.getString(3) + "€) ";
-				prixTotal += resultat.getDouble(3);
-
+				options += result.getString(1) + "(" + result.getString(2) + "€) ";
+				prixTotal += result.getDouble(2);
 			}
 
-			optionLabel = new JLabel(options);
+			optionText = new JTextArea(options);
+
 			prixTotalLabel = new JLabel(prixTotal.toString() + "€");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -97,7 +89,6 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		panNom.setBackground(Color.white);
 		panNom.setPreferredSize(new Dimension(220, 60));
 		panNom.setBorder(BorderFactory.createTitledBorder("Nom du Véhicule"));
-		// nomLabel = new JLabel("LAGS");
 		panNom.add(nomLabel);
 
 		// La marque
@@ -105,7 +96,6 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		panMarque.setBackground(Color.white);
 		panMarque.setPreferredSize(new Dimension(220, 60));
 		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Véhicule"));
-
 		panMarque.add(marqueLabel);
 
 		// Type de moteur
@@ -113,7 +103,6 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		panMoteur.setBackground(Color.white);
 		panMoteur.setPreferredSize(new Dimension(440, 60));
 		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du véhicule"));
-		// moteurLabel = new JLabel("DIESEL 250 Hdi");
 		panMoteur.add(moteurLabel);
 
 		// prix du véhicule
@@ -121,23 +110,24 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		panPrix.setBackground(Color.white);
 		panPrix.setPreferredSize(new Dimension(220, 60));
 		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du Véhicule"));
-		// prixLabel = new JLabel("Prix sans options : 10000.0€");
 		panPrix.add(prixLabel);
 
 		// options
 		JPanel panOptions = new JPanel();
 		panOptions.setBackground(Color.white);
-		panOptions.setPreferredSize(new Dimension(520, 60));
+		panOptions.setPreferredSize(new Dimension(520, 70));
 		panOptions.setBorder(BorderFactory.createTitledBorder("Options disponibles"));
-		// optionLabel = new JLabel("Toit ouvrant(150€)");
-		panOptions.add(optionLabel);
+		optionText.setEditable(false);
+		optionText.setLineWrap(true);
+		optionText.setWrapStyleWord(true);
+		optionText.setPreferredSize(new Dimension(500, 40));
+		panOptions.add(optionText);
 
 		// prix total du véhicule
 		JPanel panPrixTotal = new JPanel();
 		panPrixTotal.setBackground(Color.green);
 		panPrixTotal.setPreferredSize(new Dimension(330, 60));
 		panPrixTotal.setBorder(BorderFactory.createTitledBorder("Prix Total du Véhicule"));
-		// prixTotalLabel = new JLabel("15034.0€");
 		panPrixTotal.add(prixTotalLabel);
 
 		JPanel content = new JPanel();

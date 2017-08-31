@@ -35,18 +35,47 @@ public class NewVehiculeDialogBox extends JDialog {
 	public NewVehiculeDialogBox(JFrame parent, String title, boolean modal) {
 		// On appelle le constructeur de JDialog correspondant
 		super(parent, title, modal);
-		// On spécifie une taille
+		// On spï¿½cifie une taille
 		this.setSize(560, 370);
 		// La position
 		this.setLocationRelativeTo(null);
-		// La boîte ne devra pas être redimensionnable
+		// La boï¿½te ne devra pas ï¿½tre redimensionnable
 		this.setResizable(false);
 
-		// Tout ceci ressemble à ce que nous faisons depuis le début avec notre JFrame.
+		// Tout ceci ressemble ï¿½ ce que nous faisons depuis le dï¿½but avec notre JFrame.
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.initComponent();
 		this.setVisible(true);
 
+	}
+
+	public String getPrix() {
+		return prix.getText();
+	}
+
+	public String getMarque() {
+		return marque.getSelectedItem().toString();
+	}
+
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return nom.getText();
+	}
+
+	public String getMoteur() {
+		return moteur.getSelectedItem().toString();
+	}
+
+	public boolean[] getOptions() {
+		boolean[] tab = {false, false, false, false, false};
+		if (checkBarre.isSelected()) { tab[0] = true; }
+		if (checkClimatisation.isSelected()) {tab[1] = true;}
+		if (checkGPS.isSelected()) {tab[2] = true;}
+		if (checkSieges.isSelected()) {tab[3] = true;}
+		if (checkToit.isSelected()) {tab[4] = true;}
+		return tab;
+		
+		
 	}
 
 	private void initComponent() {
@@ -56,7 +85,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		panNom.setPreferredSize(new Dimension(220, 60));
 		nom = new JTextField();
 		nom.setPreferredSize(new Dimension(100, 25));
-		panNom.setBorder(BorderFactory.createTitledBorder("Nom du Véhicule"));
+		panNom.setBorder(BorderFactory.createTitledBorder("Nom du Vï¿½hicule"));
 		nomLabel = new JLabel("Saisir un nom :");
 		panNom.add(nomLabel);
 		panNom.add(nom);
@@ -69,7 +98,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		marque.addItem("PIGEOT");
 		marque.addItem("RENO");
 		marque.addItem("TROEN");
-		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Véhicule"));
+		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Vï¿½hicule"));
 		marqueLabel = new JLabel("Marque :");
 		panMarque.add(marqueLabel);
 		panMarque.add(marque);
@@ -83,39 +112,38 @@ public class NewVehiculeDialogBox extends JDialog {
 		moteur.addItem("Diesel");
 		moteur.addItem("Hybride");
 		moteur.addItem("Electrique");
-		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du véhicule"));
+		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du vï¿½hicule"));
 		moteurLabel = new JLabel("Moteur :");
 		panMoteur.add(moteurLabel);
 		panMoteur.add(moteur);
 
-		// prix du véhicule
+		// prix du vï¿½hicule
 		JPanel panPrix = new JPanel();
 		panPrix.setBackground(Color.white);
 		panPrix.setPreferredSize(new Dimension(220, 60));
 		prix = new JTextField();
 		prix.setPreferredSize(new Dimension(100, 25));
-		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du Véhicule"));
+		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du Vï¿½hicule"));
 		prixLabel = new JLabel("Prix :");
 		panPrix.add(prixLabel);
 		panPrix.add(prix);
 
-		//options
+		// options
 		JPanel panOptions = new JPanel();
 		panOptions.setBackground(Color.white);
 		panOptions.setPreferredSize(new Dimension(520, 60));
 		checkBarre = new JCheckBox("Barre de toit");
-		checkClimatisation= new JCheckBox("Climatisation");
-		checkGPS= new JCheckBox("GPS");
-		checkSieges= new JCheckBox("Sièges chauffants");
-		checkToit= new JCheckBox("Toit ouvrant");
+		checkClimatisation = new JCheckBox("Climatisation");
+		checkGPS = new JCheckBox("GPS");
+		checkSieges = new JCheckBox("Siï¿½ges chauffants");
+		checkToit = new JCheckBox("Toit ouvrant");
 		panOptions.setBorder(BorderFactory.createTitledBorder("Options disponibles"));
 		panOptions.add(checkBarre);
 		panOptions.add(checkClimatisation);
 		panOptions.add(checkGPS);
 		panOptions.add(checkSieges);
 		panOptions.add(checkToit);
-		
-		
+
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
 		content.add(panNom);
@@ -123,22 +151,17 @@ public class NewVehiculeDialogBox extends JDialog {
 		content.add(panMoteur);
 		content.add(panPrix);
 		content.add(panOptions);
-		
+
 		JPanel control = new JPanel();
 		JButton okBouton = new JButton("OK");
 		JButton cancelBouton = new JButton("Annuler");
-		
-		okBouton.addActionListener(new NewVehiculeDialogBoxOkListener()); 
-		cancelBouton.addActionListener(new NewVehiculeDialogBoxCancelListener());
-		
-		
+
+		okBouton.addActionListener(new NewVehiculeDialogBoxOkListener(this));
+		cancelBouton.addActionListener(new NewVehiculeDialogBoxCancelListener(this));
+
 		control.add(okBouton);
-	    control.add(cancelBouton);
-	    
-	    
-	    
-	    
-	    
+		control.add(cancelBouton);
+
 		this.getContentPane().add(content, BorderLayout.CENTER);
 		this.getContentPane().add(control, BorderLayout.SOUTH);
 	}
