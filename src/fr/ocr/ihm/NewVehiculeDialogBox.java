@@ -57,7 +57,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		return marque.getSelectedItem().toString();
 	}
 
-	public String getNom() {
+	public String getNom()  {
 		// TODO Auto-generated method stub
 		return nom.getText();
 	}
@@ -85,7 +85,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		panNom.setPreferredSize(new Dimension(220, 60));
 		nom = new JTextField();
 		nom.setPreferredSize(new Dimension(100, 25));
-		panNom.setBorder(BorderFactory.createTitledBorder("Nom du V�hicule"));
+		panNom.setBorder(BorderFactory.createTitledBorder("Nom du Véhicule"));
 		nomLabel = new JLabel("Saisir un nom :");
 		panNom.add(nomLabel);
 		panNom.add(nom);
@@ -98,7 +98,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		marque.addItem("PIGEOT");
 		marque.addItem("RENO");
 		marque.addItem("TROEN");
-		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du V�hicule"));
+		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Véhicule"));
 		marqueLabel = new JLabel("Marque :");
 		panMarque.add(marqueLabel);
 		panMarque.add(marque);
@@ -112,18 +112,18 @@ public class NewVehiculeDialogBox extends JDialog {
 		moteur.addItem("Diesel");
 		moteur.addItem("Hybride");
 		moteur.addItem("Electrique");
-		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du v�hicule"));
+		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du véhicule"));
 		moteurLabel = new JLabel("Moteur :");
 		panMoteur.add(moteurLabel);
 		panMoteur.add(moteur);
 
-		// prix du v�hicule
+		// prix du véhicule
 		JPanel panPrix = new JPanel();
 		panPrix.setBackground(Color.white);
 		panPrix.setPreferredSize(new Dimension(220, 60));
 		prix = new JTextField();
 		prix.setPreferredSize(new Dimension(100, 25));
-		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du V�hicule"));
+		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du Véhicule"));
 		prixLabel = new JLabel("Prix :");
 		panPrix.add(prixLabel);
 		panPrix.add(prix);
@@ -135,7 +135,7 @@ public class NewVehiculeDialogBox extends JDialog {
 		checkBarre = new JCheckBox("Barre de toit");
 		checkClimatisation = new JCheckBox("Climatisation");
 		checkGPS = new JCheckBox("GPS");
-		checkSieges = new JCheckBox("Si�ges chauffants");
+		checkSieges = new JCheckBox("Sièges chauffants");
 		checkToit = new JCheckBox("Toit ouvrant");
 		panOptions.setBorder(BorderFactory.createTitledBorder("Options disponibles"));
 		panOptions.add(checkBarre);

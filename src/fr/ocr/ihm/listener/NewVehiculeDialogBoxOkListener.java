@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import fr.ocr.ihm.NewVehiculeDialogBox;
 
@@ -19,18 +20,35 @@ public class NewVehiculeDialogBoxOkListener implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub
-		System.out.println(dialog.getPrix());
-		System.out.println(dialog.getMarque());
-		System.out.println(dialog.getNom());
-		System.out.println(dialog.getMoteur());
-		System.out.println(dialog.getOptions());
-		for (int i = 0; i<dialog.getOptions().length;i++) {
-			if (dialog.getOptions()[i]) System.out.print(" 1 ");
-			else System.out.print(" 0 ");
+		Double prix;
+		String marque, nom, moteur;
+		boolean[] options ; 
+		boolean erreur = false;
 		
+		try {
+			prix = new Double(dialog.getPrix());
+			if (prix<0) throw new Exception("Prix positif");
 		}
-		dialog.dispose();
+		catch (Exception e) {
+			//JOptionPane jop2 = new JOptionPane();
+			JOptionPane.showMessageDialog(null, "Veuillez renseigner un prix correct !", "Attention", JOptionPane.WARNING_MESSAGE);
+			erreur = true;
+		}
+		
+		if (dialog.getNom().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Veuillez renseigner un nom !", "Attention", JOptionPane.WARNING_MESSAGE);
+			 erreur=true;
+		}
+		nom = dialog.getNom();
+		marque = dialog.getMarque();
+		moteur = dialog.getMoteur();
+		options = dialog.getOptions();
+		if (!erreur) {
+			// remplir la base de donnée
+			
+			dialog.dispose();
+		}
+		
 	}
 
 }
