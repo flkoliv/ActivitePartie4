@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +24,7 @@ import javax.swing.JTextField;
 
 import fr.ocr.ihm.listener.NewVehiculeDialogBoxCancelListener;
 import fr.ocr.ihm.listener.NewVehiculeDialogBoxOkListener;
+import fr.ocr.sql.HsqldbConnection;
 
 public class NewVehiculeDialogBox extends JDialog {
 	/**
@@ -31,24 +36,25 @@ public class NewVehiculeDialogBox extends JDialog {
 	private JComboBox<String> marque, moteur;
 	private JCheckBox checkBarre, checkClimatisation, checkGPS, checkSieges, checkToit;
 	private JTextField nom, prix;
+	private JFrame mere;
 
 	public NewVehiculeDialogBox(JFrame parent, String title, boolean modal) {
 		// On appelle le constructeur de JDialog correspondant
 		super(parent, title, modal);
-		// On sp�cifie une taille
+		// On spécifie une taille
+		this.mere = parent;
 		this.setSize(560, 370);
 		// La position
 		this.setLocationRelativeTo(null);
-		// La bo�te ne devra pas �tre redimensionnable
+		// La boite ne devra pas être redimensionnable
 		this.setResizable(false);
-
-		// Tout ceci ressemble � ce que nous faisons depuis le d�but avec notre JFrame.
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.initComponent();
 		this.setVisible(true);
+		
 
 	}
-
+	boolean[] options;
 	public String getPrix() {
 		return prix.getText();
 	}
@@ -58,7 +64,7 @@ public class NewVehiculeDialogBox extends JDialog {
 	}
 
 	public String getNom()  {
-		// TODO Auto-generated method stub
+		
 		return nom.getText();
 	}
 
@@ -68,17 +74,25 @@ public class NewVehiculeDialogBox extends JDialog {
 
 	public boolean[] getOptions() {
 		boolean[] tab = {false, false, false, false, false};
-		if (checkBarre.isSelected()) { tab[0] = true; }
+		if (checkBarre.isSelected()) { tab[4] = true; }
 		if (checkClimatisation.isSelected()) {tab[1] = true;}
 		if (checkGPS.isSelected()) {tab[2] = true;}
 		if (checkSieges.isSelected()) {tab[3] = true;}
-		if (checkToit.isSelected()) {tab[4] = true;}
+		if (checkToit.isSelected()) {tab[0] = true;}
 		return tab;
 		
 		
 	}
+	
+	public JFrame getMere() {
+		return this.mere;
+	}
 
 	private void initComponent() {
+		Connection connect = HsqldbConnection.getInstance();
+		Statement state;
+		
+		
 		// Le nom
 		JPanel panNom = new JPanel();
 		panNom.setBackground(Color.white);
@@ -95,9 +109,18 @@ public class NewVehiculeDialogBox extends JDialog {
 		panMarque.setBackground(Color.white);
 		panMarque.setPreferredSize(new Dimension(220, 60));
 		marque = new JComboBox<String>();
-		marque.addItem("PIGEOT");
-		marque.addItem("RENO");
-		marque.addItem("TROEN");
+		try {
+			state= connect.createStatement();
+			String requete = "SELECT nom FROM marque";
+			ResultSet result = state.executeQuery(requete);
+			while(result.next()) {
+				marque.addItem(result.getString(1));
+			}
+			
+		}
+		catch (Exception e) {
+			
+		}
 		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Véhicule"));
 		marqueLabel = new JLabel("Marque :");
 		panMarque.add(marqueLabel);
@@ -108,10 +131,18 @@ public class NewVehiculeDialogBox extends JDialog {
 		panMoteur.setBackground(Color.white);
 		panMoteur.setPreferredSize(new Dimension(440, 60));
 		moteur = new JComboBox<String>();
-		moteur.addItem("Essence");
-		moteur.addItem("Diesel");
-		moteur.addItem("Hybride");
-		moteur.addItem("Electrique");
+		try {
+			state= connect.createStatement();
+			String requete = "SELECT * FROM moteur INNER JOIN type_moteur ON moteur.moteur = type_moteur.id";
+			ResultSet result = state.executeQuery(requete);
+			while(result.next()) {
+				moteur.addItem(result.getString(6) + " "+result.getString(2));
+			}
+			
+		}
+		catch (Exception e) {
+			
+		}
 		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du véhicule"));
 		moteurLabel = new JLabel("Moteur :");
 		panMoteur.add(moteurLabel);
@@ -164,6 +195,7 @@ public class NewVehiculeDialogBox extends JDialog {
 
 		this.getContentPane().add(content, BorderLayout.CENTER);
 		this.getContentPane().add(control, BorderLayout.SOUTH);
+		
 	}
 
 }

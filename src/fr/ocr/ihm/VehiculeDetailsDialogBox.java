@@ -61,7 +61,7 @@ public class VehiculeDetailsDialogBox extends JDialog {
 			ResultSet result = state.executeQuery(requete);
 			result.next();
 			nomLabel = new JLabel(result.getString(4));
-			prixLabel = new JLabel("Prix sans options : " + result.getString(3) + "€");
+			prixLabel = new JLabel("Prix sans options : " + result.getString(3) + "â‚¬");
 			prixTotal += result.getDouble(3);
 			marqueLabel = new JLabel(result.getString(7));
 			moteurLabel = new JLabel(result.getString(13) + " " + result.getString(9));
@@ -71,13 +71,13 @@ public class VehiculeDetailsDialogBox extends JDialog {
 			result = state.executeQuery(requete);
 			String options = new String();
 			while (result.next()) {
-				options += result.getString(1) + "(" + result.getString(2) + "€) ";
+				options += result.getString(1) + "(" + result.getString(2) + "â‚¬) ";
 				prixTotal += result.getDouble(2);
 			}
 
 			optionText = new JTextArea(options);
 
-			prixTotalLabel = new JLabel(prixTotal.toString() + "€");
+			prixTotalLabel = new JLabel(prixTotal.toString() + "â‚¬");
 
 		} catch (SQLException e) {
 
@@ -88,28 +88,28 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		JPanel panNom = new JPanel();
 		panNom.setBackground(Color.white);
 		panNom.setPreferredSize(new Dimension(220, 60));
-		panNom.setBorder(BorderFactory.createTitledBorder("Nom du Véhicule"));
+		panNom.setBorder(BorderFactory.createTitledBorder("Nom du VÃ©hicule"));
 		panNom.add(nomLabel);
 
 		// La marque
 		JPanel panMarque = new JPanel();
 		panMarque.setBackground(Color.white);
 		panMarque.setPreferredSize(new Dimension(220, 60));
-		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du Véhicule"));
+		panMarque.setBorder(BorderFactory.createTitledBorder("Marque du VÃ©hicule"));
 		panMarque.add(marqueLabel);
 
 		// Type de moteur
 		JPanel panMoteur = new JPanel();
 		panMoteur.setBackground(Color.white);
 		panMoteur.setPreferredSize(new Dimension(440, 60));
-		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du véhicule"));
+		panMoteur.setBorder(BorderFactory.createTitledBorder("Type de moteur du vÃ©hicule"));
 		panMoteur.add(moteurLabel);
 
-		// prix du véhicule
+		// prix du vï¿½hicule
 		JPanel panPrix = new JPanel();
 		panPrix.setBackground(Color.white);
 		panPrix.setPreferredSize(new Dimension(220, 60));
-		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du Véhicule"));
+		panPrix.setBorder(BorderFactory.createTitledBorder("Prix du VÃ©hicule"));
 		panPrix.add(prixLabel);
 
 		// options
@@ -123,11 +123,11 @@ public class VehiculeDetailsDialogBox extends JDialog {
 		optionText.setPreferredSize(new Dimension(500, 40));
 		panOptions.add(optionText);
 
-		// prix total du véhicule
+		// prix total du vÃ©hicule
 		JPanel panPrixTotal = new JPanel();
 		panPrixTotal.setBackground(Color.green);
 		panPrixTotal.setPreferredSize(new Dimension(330, 60));
-		panPrixTotal.setBorder(BorderFactory.createTitledBorder("Prix Total du Véhicule"));
+		panPrixTotal.setBorder(BorderFactory.createTitledBorder("Prix Total du VÃ©hicule"));
 		panPrixTotal.add(prixTotalLabel);
 
 		JPanel content = new JPanel();

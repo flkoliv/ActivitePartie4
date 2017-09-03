@@ -12,8 +12,8 @@ import fr.ocr.sql.DatabaseTable;
 import fr.ocr.sql.HsqldbConnection;
 
 /**
- * Classe permettant de gérer l'affichage des différentes tables de la BDD en
- * fonction du menu cliqué
+ * Classe permettant de gÃ©rer l'affichage des diffÃ©rentes tables de la BDD en
+ * fonction du menu cliquÃ©
  * 
  * @author cysboy
  */

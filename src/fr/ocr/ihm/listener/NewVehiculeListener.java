@@ -17,12 +17,7 @@ public class NewVehiculeListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("nouvelle voiture");
-		NewVehiculeDialogBox box = new NewVehiculeDialogBox(null, "Ajouter un véhicule", true);
-		/*
-		 
-		 Vous devez définir cette méthode afin d'afficher
-		 une popup personnalisée pour ainsi pouvoir créer un nouveau véhicule
-		 
-		 */
+		NewVehiculeDialogBox box = new NewVehiculeDialogBox(frame, "Ajouter un vÃ©hicule", true);
+		
 	}
 }
