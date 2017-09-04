@@ -15,6 +15,14 @@ import fr.ocr.sql.DAOTableFactory;
 import fr.ocr.sql.DatabaseTable;
 import fr.ocr.sql.HsqldbConnection;
 
+/**
+ * Classe permettant d'écouter le bouton OK de la boite nouveau véhicule
+ *
+ * 
+ * @author flkoliv
+ */
+
+
 public class NewVehiculeDialogBoxOkListener implements ActionListener {
 
 	NewVehiculeDialogBox dialog;

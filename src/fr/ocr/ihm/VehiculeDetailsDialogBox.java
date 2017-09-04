@@ -17,6 +17,15 @@ import javax.swing.JTextArea;
 
 import fr.ocr.sql.HsqldbConnection;
 
+/**
+ * Classe permettant d'afficher une boite de dialogue pour les details du véhicule
+ *
+ * 
+ * @author flkoliv
+ */
+
+
+
 public class VehiculeDetailsDialogBox extends JDialog {
 	/**
 	 * 

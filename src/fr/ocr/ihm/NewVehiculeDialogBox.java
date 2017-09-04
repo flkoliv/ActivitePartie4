@@ -26,6 +26,14 @@ import fr.ocr.ihm.listener.NewVehiculeDialogBoxCancelListener;
 import fr.ocr.ihm.listener.NewVehiculeDialogBoxOkListener;
 import fr.ocr.sql.HsqldbConnection;
 
+/**
+ * Classe permettant d'afficher une boite de dialogue pour la 
+ * saisie d'un nouveau véhicule
+ * 
+ * @author flkoliv
+ */
+
+
 public class NewVehiculeDialogBox extends JDialog {
 	/**
 	 * 

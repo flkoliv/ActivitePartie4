@@ -5,6 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
+/**
+ * Classe permettant d'ecouter le bouton cancel de la boite nouveau véhicule
+ *
+ * 
+ * @author flkoliv
+ */
+
 
 public class NewVehiculeDialogBoxCancelListener implements ActionListener {
 	JDialog dialog;
